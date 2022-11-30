@@ -8,6 +8,17 @@ const App = () => {
     const [author, setAuthor] = useState("");
     const [image, setImage] = useState("");
 
+    const DeleteHandler = (index) => {
+        // console.log(index);
+
+        const copyGallery = [...gallery];
+        copyGallery.splice(index, 1);
+
+        // const copyGallery = gallery.filter((g, i) => i !== index);
+
+        setGallery(copyGallery);
+    };
+
     const SubmitHandler = (e) => {
         e.preventDefault();
 
@@ -40,8 +51,14 @@ const App = () => {
             >
                 <img src={card.image} className="card-img-top" alt="..." />
                 <div className="card-body">
-                    <p className="card-text">
-                        {card.title} | {card.author}
+                    <p className="card-text d-flex justify-content-between align-items-center">
+                        <span>
+                            {card.title} | {card.author}
+                        </span>
+                        <i
+                            onClick={() => DeleteHandler(index)}
+                            className="fs-4 text-danger ri-delete-bin-6-line"
+                        ></i>
                     </p>
                 </div>
             </div>
