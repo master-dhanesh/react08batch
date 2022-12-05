@@ -1,45 +1,32 @@
 import React from "react";
-import loader from "../assets/loader.gif";
 
 const Show = (props) => {
     const { gallery, setGallery } = props;
-
-    const DeleteHandler = (index) => {
-        const copyGallery = [...gallery];
-        copyGallery.splice(index, 1);
-        setGallery(copyGallery);
+    const DeleteHandler = (i) => {
+        const copyFilter = gallery.filter((c, idx) => i !== idx);
+        setGallery(copyFilter);
     };
 
-    let cardlist = (
-        <p className="text-center w-100">
-            <img width={400} src={loader} />
-        </p>
-    );
+    let cardList = "Loading...";
 
     if (gallery.length > 0) {
-        cardlist = gallery.map((card, index) => (
-            <div
-                key={index}
-                className="card me-3 mb-3"
-                style={{ width: "18rem" }}
-            >
-                <img src={card.image} className="card-img-top" alt="..." />
+        cardList = gallery.map((c, i) => (
+            <div key={i} className="card mb-3 me-3" style={{ width: "18rem" }}>
+                <img src={c.image} />
                 <div className="card-body">
-                    <p className="card-text d-flex justify-content-between align-items-center">
-                        <span>
-                            {card.title} | {card.author}
-                        </span>
+                    <p className="card-text d-flex justify-content-between">
+                        <span>{c.title}</span>
+                        <span>{c.author}</span>
                         <i
-                            onClick={() => DeleteHandler(index)}
-                            className="fs-4 text-danger ri-delete-bin-6-line"
+                            onClick={() => DeleteHandler(i)}
+                            className="text-danger ri-delete-bin-2-line"
                         ></i>
                     </p>
                 </div>
             </div>
         ));
     }
-
-    return <div className="container d-flex flex-wrap">{cardlist}</div>;
+    return <div className="cards w-100 d-flex flex-wrap">{cardList}</div>;
 };
 
 export default Show;
