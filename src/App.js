@@ -1,79 +1,47 @@
-import React, { useState, useRef } from "react";
+import React, { Component } from "react";
+import axios from "axios";
+import loader from "./assets/loader.gif";
+class App extends Component {
+    //
 
-const App = () => {
-    const titleRef = useRef(null);
-    const descRef = useRef(null);
-    const btnRef = useRef(null);
-    const [title, setTitle] = useState("");
-    const [desc, setDesc] = useState("");
+    constructor(props) {
+        super(props);
+        this.state = {
+            images: null,
+        };
+        console.log("[App.js] Constructor");
+    }
 
-    const TitleHandler = (e) => {
-        setTitle(e.target.value);
-        if (titleRef.current.value.length < 4) {
-            titleRef.current.style.border = "1px solid red";
-            titleRef.current.style.outline = "1px solid red";
-        } else {
-            titleRef.current.style.border = "initial";
-            titleRef.current.style.outline = "initial";
+    async getImages() {
+        try {
+            const { data } = await axios.get("https://picsum.photos/v2/list");
+            console.log(data);
+            this.setState({ images: data });
+        } catch (err) {
+            console.log(err);
         }
+    }
 
-        if (title.length > 3 && desc.length > 3) {
-            btnRef.current.disabled = false;
-        } else {
-            btnRef.current.disabled = true;
-        }
-    };
+    componentDidMount() {
+        this.getImages();
+        console.log("[App.js] ComponentDidMount");
+    }
 
-    const DescHandler = (e) => {
-        setDesc(e.target.value);
-        if (descRef.current.value.length < 4) {
-            descRef.current.style.border = "1px solid red";
-            descRef.current.style.outline = "1px solid red";
-        } else {
-            descRef.current.style.border = "initial";
-            descRef.current.style.outline = "initial";
-        }
+    render() {
+        console.log("[App.js] Render");
+        return (
+            <div>
+                <h1>This is App.js Class Component.</h1>
 
-        if (title.length > 3 && desc.length > 3) {
-            btnRef.current.disabled = false;
-        } else {
-            btnRef.current.disabled = true;
-        }
-    };
-
-    const SubmitHandler = (e) => {
-        e.preventDefault();
-        if (title.trim().length === 0 || desc.trim().length === 0) {
-            alert("Fields can not be empty");
-            return;
-        }
-        console.log("hello");
-    };
-
-    return (
-        <div>
-            <form onSubmit={SubmitHandler} className="container mt-5 w-50">
-                <input
-                    className="form-control mb-3"
-                    type="text"
-                    onChange={TitleHandler}
-                    value={title}
-                    placeholder="Title"
-                    ref={titleRef}
-                />
-                <textarea
-                    className="form-control mb-3"
-                    onChange={DescHandler}
-                    value={desc}
-                    placeholder="Description"
-                    ref={descRef}
-                ></textarea>
-                <button ref={btnRef} className="btn btn-primary">
-                    Add
-                </button>
-            </form>
-        </div>
-    );
-};
+                {/* <button onClick={this.getImages}>Get Images</button> */}
+                {this.state.images ? (
+                    JSON.stringify(this.state.images)
+                ) : (
+                    <img src={loader} alt="" />
+                )}
+            </div>
+        );
+    }
+}
 
 export default App;
