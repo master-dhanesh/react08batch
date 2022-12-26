@@ -1,32 +1,23 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./Components/Home";
+import Signin from "./Components/Signin";
+import Signup from "./Components/Signup";
+import "./Stylesheets/nav.css";
 const App = () => {
-    const [Images, setImages] = useState(null);
-    const [Toggle, setToggle] = useState(false);
-
-    const GetImages = async () => {
-        const { data } = await axios.get("https://picsum.photos/v2/list");
-        setImages(data);
-    };
-
-    useEffect(() => {
-        if (Images === null) {
-            console.log("Get Images Called!");
-            GetImages();
-        }
-
-        return () => {
-            console.log("Deletion..");
-        };
-    }, [Images]);
-
     return (
-        <div>
-            <button onClick={() => setToggle(!Toggle)}>Toggle</button>
-            {Toggle ? "Hello There" : "No Hello"}
+        <div className="container w-50 mt-5">
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/signup">SignUp</Link>
+                <Link to="/signin">SignIn</Link>
+            </nav>
             <hr />
-            {Images ? JSON.stringify(Images) : <h1>Loading...</h1>}
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+            </Routes>
         </div>
     );
 };
