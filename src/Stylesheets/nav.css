@@ -3,3 +3,11 @@ nav a {
     font-size: 1.5vmax;
     text-decoration: none;
 }
+
+.red {
+    color: red;
+}
+
+.navlinks {
+    text-decoration: underline;
+}
