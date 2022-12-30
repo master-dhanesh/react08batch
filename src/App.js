@@ -6,13 +6,13 @@ import User from "./Components/User";
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
 import "./Stylesheets/nav.css";
+import Timeline from "./Components/Timeline";
 const App = () => {
     return (
         <div className="container w-50 mt-5">
             <nav>
                 <NavLink
-                    className={`${({ isActive }) =>
-                        isActive ? "red" : ""} navlinks`}
+                    className={({ isActive }) => (isActive ? "red" : "")}
                     to="/"
                 >
                     Home
@@ -33,6 +33,7 @@ const App = () => {
             <hr />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/user/:name" element={<Timeline />} />
                 <Route path="/signin" element={<Signin />}>
                     <Route path="/signin/profile" element={<Profile />} />
                     <Route path="/signin/user" element={<User />} />
