@@ -1,4 +1,5 @@
 import React from "react";
+import Dets from "./Dets";
 import { useParams, useLocation, Link } from "react-router-dom";
 
 const Timeline = () => {
@@ -7,6 +8,7 @@ const Timeline = () => {
     return (
         <div>
             <h1>Welcome {name} 👋</h1>
+            <Dets />
             <Link to="/">Home</Link>
         </div>
     );
