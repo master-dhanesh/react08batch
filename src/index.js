@@ -4,11 +4,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "remixicon/fonts/remixicon.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import Context from "./Context/Context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
-        <App />
+        <Context>
+            <App />
+        </Context>
     </BrowserRouter>
 );
 
