@@ -1,21 +1,41 @@
-import React from "react";
-import Child from "./Child";
-import Appcss from "./App.module.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Routes, Route, Link } from "react-router-dom";
+import Details from "./Details";
+
 const App = () => {
-    const s = { fontSize: "4vmax", color: "green" };
-    const y = { fontWeight: 900 };
+    const [Movies, setMovies] = useState([]);
+    const getPopularMovies = async () => {
+        try {
+            const { data } = await axios.get(
+                "https://api.themoviedb.org/3/movie/popular?api_key=223667d1239871fc4b6eeef8d0d6def8&language=en-US&page=1"
+            );
+            setMovies(data.results);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getPopularMovies();
+    }, []);
+
+    let MovieList = "Loading...";
+    if (Movies.length > 0) {
+        MovieList = Movies.map((m) => (
+            <li key={m.id}>
+                <Link to={`/details/${m.id}`}>{m.original_title}</Link>
+            </li>
+        ));
+    }
+
     return (
-        <div className="App">
-            <nav>
-                <h1 className={Appcss.red}>Logo Here</h1>
-                <ul>
-                    <li style={s}>Home</li>
-                    <li>About</li>
-                    <li>Content</li>
-                </ul>
-            </nav>
+        <div>
+            {MovieList}
             <hr />
-            <Child />
+            <Routes>
+                <Route path="/details/:id" element={<Details />} />
+            </Routes>
         </div>
     );
 };
