@@ -1,51 +1,21 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Routes, Route, Link } from "react-router-dom";
-import Details from "./Details";
-import { createContext } from "react";
-
-export const MoviesContext = createContext(null);
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { increment } from "./store/features/counter/counterSlice";
 
 const App = () => {
-    const [Movies, setMovies] = useState([]);
-    const getPopularMovies = async () => {
-        try {
-            const { data } = await axios.get(
-                "https://api.themoviedb.org/3/movie/popular?api_key=223667d1239871fc4b6eeef8d0d6def8&language=en-US&page=1"
-            );
-            setMovies(data.results);
-        } catch (err) {
-            console.log(err);
-        }
+    const dispatch = useDispatch();
+    const a = useSelector((state) => state);
+    console.log(a);
+
+    const incrementValue = () => {
+        dispatch(increment());
     };
-
-    useEffect(() => {
-        getPopularMovies();
-    }, []);
-
-    let MovieList = "Loading...";
-    if (Movies.length > 0) {
-        MovieList = Movies.map((m) => (
-            <li key={m.id}>
-                <Link to={`/details/${m.id}`}>{m.original_title}</Link>
-            </li>
-        ));
-    }
 
     return (
         <div>
-            {MovieList}
-            <hr />
-
-            <MoviesContext.Provider value={Movies}>
-                <Routes>
-                    <Route path="/details/:id" element={<Details />} />
-                </Routes>
-            </MoviesContext.Provider>
+            <button onClick={incrementValue}>+</button>
         </div>
     );
 };
 
 export default App;
-
-
