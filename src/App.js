@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Routes, Route, Link } from "react-router-dom";
 import Details from "./Details";
+import { createContext } from "react";
+
+export const MoviesContext = createContext(null);
 
 const App = () => {
     const [Movies, setMovies] = useState([]);
@@ -33,11 +36,16 @@ const App = () => {
         <div>
             {MovieList}
             <hr />
-            <Routes>
-                <Route path="/details/:id" element={<Details />} />
-            </Routes>
+
+            <MoviesContext.Provider value={Movies}>
+                <Routes>
+                    <Route path="/details/:id" element={<Details />} />
+                </Routes>
+            </MoviesContext.Provider>
         </div>
     );
 };
 
 export default App;
+
+

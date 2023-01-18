@@ -1,7 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-const Details = () => {
+import { MoviesContext } from "./App";
+
+const Details = (props) => {
+    const data = useContext(MoviesContext);
+    console.log(data);
+    console.log(props);
+
     const [Movie, setMovie] = useState(null);
     const { id } = useParams();
     console.log(id);
