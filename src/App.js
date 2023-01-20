@@ -1,19 +1,23 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { increment } from "./store/features/counter/counterSlice";
+import { Link, Route, Routes } from "react-router-dom";
+import Add from "./Components/Add";
+import Home from "./Components/Home";
+import Show from "./Components/Show";
 
 const App = () => {
-    const dispatch = useDispatch();
-    const a = useSelector((state) => state);
-    console.log(a);
-
-    const incrementValue = () => {
-        dispatch(increment());
-    };
-
     return (
-        <div>
-            <button onClick={incrementValue}>+</button>
+        <div className="container mt-5 m-auto">
+            <nav>
+                <Link to="/">Home</Link> <br />
+                <Link to="/add">Add User</Link> <br />
+                <Link to="/show">Show User</Link>
+            </nav>
+            <hr />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/add" element={<Add />} />
+                <Route path="/show" element={<Show />} />
+            </Routes>
         </div>
     );
 };

@@ -16,4 +16,5 @@ root.render(
     </Provider>
 );
 
+// 2. Wrap App with Provider store
 // https://picsum.photos/v2/list
