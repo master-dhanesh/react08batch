@@ -1,21 +1,9 @@
 import React from "react";
-import { Link, Routes, Route } from "react-router-dom";
-import Auth from "./Auth";
-import Cloudstore from "./Cloudstore";
-import Storage from "./Storage";
 
 const App = () => {
     return (
-        <div className="container mt-5">
-            <Link to="/auth">Authentication</Link>
-            <Link to="/data">Cloud Store</Link>
-            <Link to="/media">Storage Media</Link>
-            <hr />
-            <Routes>
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/data" element={<Cloudstore />} />
-                <Route path="/media" element={<Storage />} />
-            </Routes>
+        <div className="container alert alert-dark p-5 mt-5">
+            <h1>This is Normal Page Of React</h1>
         </div>
     );
 };
